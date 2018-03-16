@@ -1,0 +1,55 @@
+<div class="main-container container">
+    <header>
+        <h1>CityBy<span>Weather</span>
+        </h1>
+    </header>
+    <div class="content" ng-if="vm.ready">
+        <div class="sliders" layout="column">
+            <div class="slider temperature" flex>
+                <label>Temperature: {{vm.targetTemperature}}&deg;C</label>
+                <md-slider-container flex>
+                    <md-slider aria-label="temperature" flex min="{{vm.temperatureRange.min}}" max="{{vm.temperatureRange.max}}" round="0" ng-model="vm.targetTemperature">
+                    </md-slider>
+                </md-slider-container>
+            </div>
+            <div class="slider humidity" flex>
+                <label>Humidity: {{vm.targetHumidity}}%</label>
+                <md-slider-container flex>
+                    <md-slider aria-label="humidity" flex min="{{vm.humidityRange.min}}" max="{{vm.humidityRange.max}}" round="0" ng-model="vm.targetHumidity">
+                    </md-slider>
+                </md-slider-container>
+            </div>
+        </div>
+        <div class="cities">
+            <ul>
+                <li ng-repeat="item in vm.filteredData">
+                    <div class="info">
+                        <h2 class="name">
+                            {{item.city}}
+                        </h2>
+                        <span>
+                            It's {{item.temperature | tempText}} with 
+                            <strong>{{item.temperature}}&deg;C</strong> and
+                            <strong>{{item.humidity}}%</strong> humidity</span>
+                    </div>
+                    <div class="score">
+                        <div class="number">
+                            {{item.match * 100 | number : 0}}<span class="percent">%</span>
+                        </div>
+                        <div class="text">
+                            match
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="loader" ng-class="{on:!vm.ready}">
+        <app-spinner>
+            Please wait while we fetch weather and city data
+        </app-spinner>
+    </div>
+</div>

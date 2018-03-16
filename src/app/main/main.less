@@ -1,0 +1,211 @@
+@accent1: #FF4081;
+@backgroundColor: #f8f8f8;
+@transitionTime: .4s;
+
+.main-container {
+  > header {
+    border-bottom: 1px solid #d0d0d0;
+    position: relative;
+    padding-top: 15px;
+
+    h1 {
+      margin: 0;
+      padding: 0;
+      font-size: 50px;
+      font-weight: 300;
+      display: inline-block;
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background-color: @backgroundColor;
+      }
+
+      span {
+        font-weight: 700;
+        color: @accent1;
+      }
+    }
+
+  }
+
+  > .content {
+    padding-top: 25px;
+
+    .sliders {
+      float: right;
+      width: 35%;
+      padding: 15px;
+      background-color: #fff;
+      box-shadow: 4px 4px 8px #888;
+    }
+
+    .cities {
+      float: left;
+      padding-right: 30px;
+      width: 65%;
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+          margin: 0;
+          padding: 15px;
+          transition: background @transitionTime;
+          border-bottom: 1px solid #f0f0f0;
+          position: relative;
+
+          &:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background-color: @accent1;
+            transition: all @transitionTime;
+          }
+
+          &:hover {
+            background-color: #fff;
+
+            &:before {
+              width: 4px;
+              height: 100%;
+              top: 0;
+            }
+
+            .score {
+              box-shadow: 2px 2px 5px #484848;
+            }
+
+            .info {
+              padding-left: 15px;
+            }
+          }
+
+          &:after {
+            content: "";
+            display: table;
+            float: none;
+            clear: both;
+          }
+
+          .score {
+            transition: all @transitionTime;
+            width: 65px;
+            height: 65px;
+            background-color: @accent1;
+            color: #fff;
+
+            float: left;
+            text-align: center;
+            border-radius: 50%;
+
+            > .number {
+              padding-top: 14px;
+              font-size: 25px;
+              line-height: 25px;
+              font-weight: 300;
+
+              .percent {
+                font-size: 14px;
+              }
+
+            }
+
+            .text {
+              position: relative;
+              top: -3px;
+              font-size: 13px;
+              line-height: 13px;
+              font-weight: 300;
+
+            }
+          }
+
+          .info {
+            width: ~"calc(100% - 65px)";
+            float: left;
+            transition: all @transitionTime;
+
+            h2 {
+              margin: 0 0 10px;
+              font-size: 28px;
+              text-transform: uppercase;
+              font-weight: 300;
+            }
+
+          }
+        }
+      }
+    }
+  }
+
+  > .loader {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background-color: rgba(255,255,255,0.8);
+    opacity: 0;
+    visibility: hidden;
+    transition: all @transitionTime;
+
+    &.on {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .content {
+      width: 240px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%) translateX(-50%);
+
+      > div {
+        margin-top: 15px;
+        text-align: center;
+      }
+
+      .spinner {
+        margin: auto;
+        width: 100%;
+        height: 60px;
+
+        > div {
+          background-color: @accent1;
+          width: 8px;
+        }
+      }
+
+    }
+  }
+}
+@media (max-width:780px) {
+  .main-container {
+    > .content {
+      .cities,
+      .sliders {
+        float: none;
+        width: 100%;
+        margin: 0 0 20px;
+      }
+
+      .cities {
+        padding: 0;
+      }
+    }
+  }
+}

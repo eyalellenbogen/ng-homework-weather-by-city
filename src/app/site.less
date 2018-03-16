@@ -1,0 +1,32 @@
+@fontFamily: 'Roboto','Trebuchet MS', 'Calibri', sans-serif;
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+
+  * {
+    box-sizing: border-box;
+  }
+  font-family: @fontFamily;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: @fontFamily;
+}
+
+.container {
+  margin: auto;
+  padding: 0 15px;
+  width: 85%;
+}
+@media (max-width:780px) {
+  .container {
+    width: 100%;
+  }
+}
