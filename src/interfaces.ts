@@ -26,3 +26,16 @@ export interface IRange {
     max: number;
     range?: number;
 }
+
+export interface IAppConfig {
+    openWeatherKey: string;
+}
+
+export interface IOpenWeatherServerError {
+    status: number;
+    statusText: string;
+    data: {
+        cod: number;
+        message: string;
+    }
+}

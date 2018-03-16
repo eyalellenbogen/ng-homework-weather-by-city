@@ -1,4 +1,4 @@
-import { IComponentDefinition, ICityWeatherInfo, IRange } from '../../interfaces';
+import { IComponentDefinition, ICityWeatherInfo, IRange, IOpenWeatherServerError } from '../../interfaces';
 import { ApiServiceDefinition, ApiService, QueryServiceDefinition, QueryService } from "../shared";
 import * as _ from 'lodash';
 
@@ -6,6 +6,7 @@ export class MainController {
     static $inject = ['$scope', ApiServiceDefinition.name, QueryServiceDefinition.name];
 
     public ready: boolean;
+    public error: IOpenWeatherServerError;
     public temperatureRange: IRange;
     public humidityRange: IRange;
 
@@ -63,6 +64,8 @@ export class MainController {
             this.initRanges(data);
             this.sortData();
             this.ready = true;
+        }, (err) => {
+            this.error = err;
         });
     }
 }

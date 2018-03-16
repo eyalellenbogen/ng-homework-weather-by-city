@@ -47,9 +47,18 @@
 
     </div>
 
-    <div class="loader" ng-class="{on:!vm.ready}">
+    <div class="loader" ng-class="{on:!vm.ready && !vm.error}">
         <app-spinner>
             Please wait while we fetch weather and city data
         </app-spinner>
+    </div>
+    <div class="error" ng-if="vm.error">
+        <h2>Server Error ({{vm.error.status}})</h2>
+        <p>
+            Couldn't fetch data from server. <span ng-if="vm.error.status===401">Make sure you updated app-config.json with the correct API key.</span>
+            <br><br>
+            Server says:<br>
+            <code>{{vm.error.data.message}}</code>
+        </p>
     </div>
 </div>
