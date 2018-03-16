@@ -54,7 +54,7 @@ export class MainController {
     }
 
     private sortData() {
-        this.filteredData = this.queryService.findCitiesByWeather(this.data, this.targetTemperature, this.targetHumidity, 6);
+        this.filteredData = this.queryService.getCitiesByWeather(this.data, this.targetTemperature, this.targetHumidity, 6);
     }
 
     $onInit() {

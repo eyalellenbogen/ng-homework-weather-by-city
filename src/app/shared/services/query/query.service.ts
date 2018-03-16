@@ -39,7 +39,7 @@ export class QueryService {
         return this.ranges;
     }
 
-    public findCitiesByWeather(data: ICityWeatherInfo[], targetTemp: number, targetHumidity: number, limit?: number) {
+    public getCitiesByWeather(data: ICityWeatherInfo[], targetTemp: number, targetHumidity: number, limit?: number) {
         if (!this.ranges) {
             throw 'Ranges weren\'t initiated. Run setRanges() before calling this.';
         }
