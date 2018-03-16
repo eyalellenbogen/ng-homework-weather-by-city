@@ -24,4 +24,5 @@ export interface ICityWeatherInfo {
 export interface IRange {
     min: number;
     max: number;
+    range?: number;
 }

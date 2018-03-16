@@ -1,19 +1,9 @@
 import { ICityWeatherInfo, IRange } from "../../../../interfaces";
 import * as _ from "lodash";
 
-class Range implements IRange {
-    constructor(public min: number, public max: number) { }
-    get range() {
-        if (this.min === undefined || this.max === undefined) {
-            return undefined;
-        }
-        return this.max - this.min;
-    }
-}
-
 export class QueryService {
 
-    private ranges: { temperatureRange: Range, humidityRange: Range };
+    private ranges: { temperatureRange: IRange, humidityRange: IRange };
 
     private setRanges(data: ICityWeatherInfo[]) {
         let tempRange: IRange = { max: 5, min: 5 };
@@ -25,8 +15,8 @@ export class QueryService {
             humidRange.max = Math.max(x.humidity, humidRange.max);
         });
         this.ranges = {
-            temperatureRange: new Range(tempRange.min, tempRange.max),
-            humidityRange: new Range(humidRange.min, humidRange.max)
+            temperatureRange: { min: tempRange.min, max: tempRange.max, range: tempRange.max - tempRange.min },
+            humidityRange: { min: humidRange.min, max: humidRange.max, range: humidRange.max - humidRange.min }
         };
     }
 
@@ -37,9 +27,6 @@ export class QueryService {
     }
 
     private setMatchScore(data: ICityWeatherInfo[], targetTemp: number, targetHumidity: number) {
-        if (!this.ranges) {
-            this.setRanges(data);
-        }
         data.forEach(x => {
             this.setItemMatchScore(x, targetTemp, targetHumidity);
         });
@@ -52,9 +39,9 @@ export class QueryService {
         return this.ranges;
     }
 
-    public getResults(data: ICityWeatherInfo[], targetTemp: number, targetHumidity: number, limit?: number) {
+    public findCitiesByWeather(data: ICityWeatherInfo[], targetTemp: number, targetHumidity: number, limit?: number) {
         if (!this.ranges) {
-            this.setRanges(data);
+            throw 'Ranges weren\'t initiated. Run setRanges() before calling this.';
         }
         this.setMatchScore(data, targetTemp, targetHumidity);
         let res = _(data).sortBy(x => 1 - x.match).take(limit || 10).value();
