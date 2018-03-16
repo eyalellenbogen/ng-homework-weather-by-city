@@ -22,14 +22,12 @@ export class QueryService {
 
     private setItemMatchScore(item: ICityWeatherInfo, targetTemp: number, targetHumidity: number) {
         let tMatch = 1 - Math.abs(item.temperature - targetTemp) / this.ranges.temperatureRange.range;
-        let hMAtch = 1 - Math.abs(item.humidity - targetHumidity) / this.ranges.humidityRange.range;
-        item.match = (tMatch + hMAtch) / 2;
+        let hMatch = 1 - Math.abs(item.humidity - targetHumidity) / this.ranges.humidityRange.range;
+        item.match = (tMatch + hMatch) / 2;
     }
 
-    private setMatchScore(data: ICityWeatherInfo[], targetTemp: number, targetHumidity: number) {
-        data.forEach(x => {
-            this.setItemMatchScore(x, targetTemp, targetHumidity);
-        });
+    private scoreDataForMatching(data: ICityWeatherInfo[], targetTemp: number, targetHumidity: number) {
+        data.forEach(x => this.setItemMatchScore(x, targetTemp, targetHumidity));
     }
 
     public getRanges(data: ICityWeatherInfo[]) {
@@ -43,7 +41,7 @@ export class QueryService {
         if (!this.ranges) {
             throw 'Ranges weren\'t initiated. Run setRanges() before calling this.';
         }
-        this.setMatchScore(data, targetTemp, targetHumidity);
+        this.scoreDataForMatching(data, targetTemp, targetHumidity);
         let res = _(data).sortBy(x => 1 - x.match).take(limit || 10).value();
         return res;
     }
